@@ -5,7 +5,7 @@ doodleAlt: Hand-drawn laptop protected by a lock and shield
 problem: Security feels important, but the list of possible controls is too large to turn into action.
 category: security
 published: 2026-08-10
-lastReviewed: 2026-08-10
+lastReviewed: 2026-08-11
 lastUpdated: 2026-08-11
 featured: true
 ---

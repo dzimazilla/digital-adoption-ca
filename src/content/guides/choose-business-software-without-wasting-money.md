@@ -5,7 +5,7 @@ doodleAlt: Hand-drawn software options with a magnifying glass and red check
 problem: You know a tool needs to change, but every comparison starts to look the same.
 category: planning
 published: 2026-08-10
-lastReviewed: 2026-08-10
+lastReviewed: 2026-08-11
 lastUpdated: 2026-08-11
 featured: true
 ---

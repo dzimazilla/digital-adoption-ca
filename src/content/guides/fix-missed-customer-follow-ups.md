@@ -5,7 +5,7 @@ doodleAlt: Hand-drawn inbox moving toward one checked follow-up
 problem: Leads and customer requests are getting lost between inboxes, notes, and spreadsheets.
 category: customers
 published: 2026-08-10
-lastReviewed: 2026-08-10
+lastReviewed: 2026-08-11
 lastUpdated: 2026-08-11
 featured: true
 ---
