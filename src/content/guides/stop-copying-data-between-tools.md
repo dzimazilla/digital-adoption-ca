@@ -5,7 +5,7 @@ doodleAlt: Hand-drawn tool windows connected while a duplicate record is removed
 problem: Staff keep retyping the same information, but a large integration project feels disproportionate.
 category: operations
 published: 2026-08-10
-lastReviewed: 2026-08-10
+lastReviewed: 2026-08-11
 lastUpdated: 2026-08-11
 featured: true
 ---
