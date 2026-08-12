@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../utils/dates';
+
+const guides = (await getCollection('guides'))
+  .sort((a, b) => b.data.lastUpdated.valueOf() - a.data.lastUpdated.valueOf());
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'digital-adoption.ca',
+  url: 'https://digital-adoption.ca',
+  description: 'Practical digital adoption guides for Canadian small businesses choosing software, improving workflows, and using technology effectively.',
+  inLanguage: 'en-CA',
+};
+---
+
+<BaseLayout>
+  <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+
+  <div class="site-container home-page">
+    <header class="home-hero">
+      <div class="home-hero__copy">
+        <p class="eyebrow">For Canadian small businesses</p>
+        <h1>Make better technology decisions.</h1>
+        <p class="home-hero__lede">Practical, problem-first guidance for choosing tools, fixing workflows, and avoiding unnecessary software.</p>
+      </div>
+      <img
+        class="home-hero__art"
+        src="/digital-adoption-doodle.webp"
+        alt="Hand-drawn laptop and document workflow in black and red"
+        width="900"
+        height="720"
+        loading="eager"
+        decoding="async"
+      />
+    </header>
+
+    <section id="guides" class="guides-section" aria-labelledby="guides-heading">
+      <div class="section-heading">
+        <h2 id="guides-heading">Guides</h2>
+        <p>Short guides built around common business problems, not software categories.</p>
+      </div>
+
+      <ul class="guide-list">
+        {guides.map((guide) => (
+          <li>
+            <a class="guide-row" href={`/${guide.id}/`}>
+              {guide.data.doodleAlt && (
+                <img
+                  class="guide-row__thumbnail"
+                  src={`/article-doodles/${guide.id}.webp`}
+                  alt=""
+                  width="1200"
+                  height="900"
+                  style="height: auto;"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <div class="guide-row__copy">
+                <h3>{guide.data.title}</h3>
+                <p>{guide.data.description}</p>
+                <small>Reviewed {formatDate(guide.data.lastReviewed)}</small>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

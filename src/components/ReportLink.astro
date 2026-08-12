@@ -1,0 +1,16 @@
+---
+interface Props {
+  pageTitle: string;
+  pagePath: string;
+}
+
+const { pageTitle, pagePath } = Astro.props;
+const issueTitle = encodeURIComponent(`Outdated information: ${pageTitle}`);
+const pageUrl = `https://digital-adoption.ca${pagePath}`;
+const issueBody = encodeURIComponent(`Page: ${pageUrl}\n\nWhat appears outdated or incorrect:\n`);
+const reportUrl = `https://github.com/dzimazilla/digital-adoption-ca/issues/new?title=${issueTitle}&body=${issueBody}`;
+---
+
+<p class="report-link">
+  <a href={reportUrl} target="_blank" rel="noreferrer">Report outdated information</a>
+</p>

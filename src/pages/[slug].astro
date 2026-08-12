@@ -1,0 +1,79 @@
+---
+import { getCollection, render } from 'astro:content';
+import ReportLink from '../components/ReportLink.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate, toIsoDate } from '../utils/dates';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({ params: { slug: guide.id }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+const articlePath = `/${guide.id}/`;
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.data.title,
+  description: guide.data.description,
+  datePublished: toIsoDate(guide.data.published),
+  dateModified: toIsoDate(guide.data.lastUpdated),
+  inLanguage: 'en-CA',
+  mainEntityOfPage: `https://digital-adoption.ca${articlePath}`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'digital-adoption.ca',
+    url: 'https://digital-adoption.ca',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'digital-adoption.ca',
+    url: 'https://digital-adoption.ca',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'digital-adoption.ca',
+    url: 'https://digital-adoption.ca',
+  },
+};
+---
+
+<BaseLayout
+  title={guide.data.title}
+  description={guide.data.description}
+  canonicalPath={articlePath}
+  article={{ published: guide.data.published, updated: guide.data.lastUpdated }}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+  <article class="site-container article-page">
+    <a class="back-link" href="/#guides">← All guides</a>
+
+    <header class="article-hero">
+      <div class="article-hero__copy">
+        <h1>{guide.data.title}</h1>
+        <p class="article-description">{guide.data.description}</p>
+        <p class="article-dates" aria-label="Guide review date">
+          <span>Reviewed <time datetime={toIsoDate(guide.data.lastReviewed)}>{formatDate(guide.data.lastReviewed)}</time></span>
+        </p>
+      </div>
+
+      {guide.data.doodleAlt && (
+        <img
+          class="article-hero__art"
+          src={`/article-doodles/${guide.id}.webp`}
+          alt={guide.data.doodleAlt}
+          width="1200"
+          height="900"
+          loading="eager"
+          decoding="async"
+        />
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+    <ReportLink pageTitle={guide.data.title} pagePath={articlePath} />
+  </article>
+</BaseLayout>
